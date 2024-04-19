@@ -3,6 +3,10 @@
 		{
 			"name": "240419-195829-nanoatmega328",
 			"path": ".."
+		},
+		{
+			"name": "Keypad",
+			"path": "../../Keypad"
 		}
 	],
 	"settings": {}
