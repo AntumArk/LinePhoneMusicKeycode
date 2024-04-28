@@ -1,7 +1,8 @@
 #include <Arduino.h>
 
+// Update passcode to match length of pass
 #define PASSCODE_LENGTH 3
-String PASSCODE = "100";
+String PASSCODE = "100"; // CHANGE HERE
 
 #include <Keypad.h>
 #include <SoftwareSerial.h>
@@ -14,14 +15,14 @@ SoftwareSerial mySoftwareSerial(2, 3);
 JQ8400_Serial mp3(mySoftwareSerial);
 
 const byte ROWS = 4; // four rows
-const byte COLS = 3; // three columns
+const byte COLS = 4; // three columns
 char keys[ROWS][COLS] = {
-    {'1', '2', '3'},
-    {'4', '5', '6'},
-    {'7', '8', '9'},
-    {'*', '0', '#'}};
-byte rowPins[ROWS] = {6, 11, 10, 8}; // connect to the row pinouts of the keypad
-byte colPins[COLS] = {7, 5, 9};      // connect to the column pinouts of the keypad
+    {'#', '9', '6', '3'},
+    {'0', '8', '5', '2'},
+    {'*', '7', '4', '1'},
+    {'x', 'm', 'd', 'u'}};
+byte rowPins[ROWS] = {5, 6, 7, 8}; // connect to the row pinouts of the keypad
+byte colPins[COLS] = {13,11, 10, 9};      // connect to the column pinouts of the keypad
 
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
 
@@ -31,6 +32,9 @@ int led_state = 0;
 
 int collectedChars = 0;
 String inputchars = "";
+
+int d=0;
+
 void resetInput()
 {
   inputchars = "";
@@ -81,18 +85,23 @@ void setup()
 
 void loop()
 {
+  // digitalWrite(led_pin, digitalRead(horn_pin));
   if (digitalRead(horn_pin))
   {
-    // Serial.println("Horn is down");
+     Serial.print(d);
+     Serial.println("Horn is down");
+     
+     d++;
     mp3.reset();
     resetInput();
   }
   else
   {
-    // Serial.println("Horn is up");
+    //Serial.println("Horn is up");
 
     char key = keypad.getKey();
-
+//     if (key)
+// Serial.println(key);
     if (key)
     {
       Serial.println(key);
@@ -113,7 +122,7 @@ void loop()
       }
     }
   }
-  // delay(1000);
+  //delay(1000);
   /*
           case 'p': Serial.println("Play");   mp3.play();     return;
         case 'r': Serial.println("Restart"); mp3.restart(); return;
