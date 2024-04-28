@@ -47,6 +47,7 @@ void checkPassCode()
     Serial.println("Correct passcode");
     if (!mp3.busy())
     {
+      mp3.setVolume(30);
       // 1 is the FAT index number, that is the first file on the
       // device, 2 is the next file, 3 is the third file.
 
@@ -79,7 +80,7 @@ void setup()
 
   mySoftwareSerial.begin(9600);
   mp3.reset();
-  mp3.setVolume(100);
+  mp3.setVolume(30);
   mp3.setLoopMode(MP3_LOOP_NONE);
 }
 
